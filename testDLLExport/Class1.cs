@@ -17,10 +17,10 @@ namespace testDLLExport
 
 
 
-        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void TProcCallback(int dane);
 
-        [DllExport("DoSendCallbackFunction", CallingConvention = CallingConvention.StdCall)]
+        [DllExport("DoSendCallbackFunction", CallingConvention = CallingConvention.Cdecl)]
         public static int DoSendCallbackFunction(IntPtr callback)
         {
             TProcCallback myCallback = (TProcCallback)Marshal.GetDelegateForFunctionPointer(callback, typeof(TProcCallback));
