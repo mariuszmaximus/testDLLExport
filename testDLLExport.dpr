@@ -16,6 +16,11 @@ type
 function DoSendCallbackFunction(ptr:TProcCallback): integer; cdecl; external DLL_PATH;
 
 
+type
+  TProcCallbackWithString = procedure (p_str: WideString);  cdecl;
+function DoSendCallbackFunctionWithString(ptr:TProcCallbackWithString): integer; cdecl; external DLL_PATH;
+
+
 var
   str: WideString;
 
@@ -32,6 +37,12 @@ begin
 end;
 
 
+procedure TestCallbacFunctionWithString(p_str: WideString); cdecl;
+begin
+   Writeln('p_str = ',p_str);
+end;
+
+
 
 begin
   Allocconsole;
@@ -44,6 +55,10 @@ begin
   DoSendCallbackFunction(TestCallbacFunction);
 
   TestCallback;
+
+
+  DoSendCallbackFunctionWithString(TestCallbacFunctionWithString);
+
   Writeln('DELPHI->END');
   readln;
 end.

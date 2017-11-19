@@ -32,5 +32,20 @@ namespace testDLLExport
         }
 
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate void TProcCallbackWithString([MarshalAs(UnmanagedType.BStr)] string dane);
+
+        [DllExport("DoSendCallbackFunctionWithString", CallingConvention = CallingConvention.Cdecl)]
+        public static int DoSendCallbackFunctionWithString(IntPtr callback)
+        {
+            TProcCallbackWithString myCallback = (TProcCallbackWithString)Marshal.GetDelegateForFunctionPointer(callback, typeof(TProcCallbackWithString));
+            string testStr = "123 test string";
+            Console.WriteLine("C#->Before Callback");
+            myCallback(testStr);
+            Console.WriteLine("C#->After Callback");
+            return 701;
+        }
+
+
     }
 }
